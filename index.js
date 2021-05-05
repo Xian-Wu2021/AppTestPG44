@@ -41,6 +41,7 @@ app.set("views", __dirname + "/views");
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/about", (req, res) => {
+    console.log("about!");
     res.render("about");
 })
 
@@ -49,6 +50,7 @@ app.get("/data", (req, res) => {
         title: "Test",
         items: ["one", "two", "three"]
     };
+    console.log("data");
     res.render("data", { model: test });
 });
 
@@ -75,8 +77,11 @@ app.get("/edit/:id", (req, res) => {
 // POST /edit/5
 app.post("/edit/:id", (req, res) => {
     const id = req.params.id;
-    const book = [req.body.title, req.body.author, req.body.comments, id];
+    const book = [req.body.Title, req.body.Author, req.body.Comments, id];
     const sql = "UPDATE Books SET Title = $1, Author = $2, Comments = $3 WHERE (Book_ID = $4)";
+    console.log(req);
+    console.log(book);
+    console.log(sql);
     pool.query(sql, book, (err, result) => {
       // if (err) ...
       res.redirect("/books");
@@ -93,7 +98,7 @@ app.get("/create", (req, res) => {
 // POST /create
 app.post("/create", (req, res) => {
     const sql = "INSERT INTO Books (Title, Author, Comments) VALUES ($1, $2, $3)";
-    const book = [req.body.title, req.body.author, req.body.comments];
+    const book = [req.body.Title, req.body.Author, req.body.Comments];
     pool.query(sql, book, (err, result) => {
       // if (err) ...
       res.redirect("/books");
