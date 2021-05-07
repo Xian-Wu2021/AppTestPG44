@@ -21,7 +21,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false })); // <--- middleware configuration
 
 
-app.listen(process.env.POST || 3000, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log("Sever started (http://localhost:3000/) !");
 })
 
